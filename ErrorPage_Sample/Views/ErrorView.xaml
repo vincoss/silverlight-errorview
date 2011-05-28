@@ -1,0 +1,122 @@
+﻿<UserControl x:Class="ErrorPage_Sample.Views.ErrorView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006">
+
+
+    <UserControl.Resources>
+
+        <Style x:Key="Style_Line_Horizontal" TargetType="Line">
+            <Setter Property="X1" Value="0" />
+            <Setter Property="Y1" Value="0" />
+            <Setter Property="X2" Value="1" />
+            <Setter Property="Y2" Value="0" />
+            <Setter Property="Stretch" Value="Fill" />
+            <Setter Property="Stroke" Value="Gray" />
+        </Style>
+
+        <Style TargetType="TextBlock">
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="Margin" Value="5" />
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="TextWrapping" Value="Wrap" />
+        </Style>
+
+    </UserControl.Resources>
+
+    <Grid x:Name="LayoutRoot" Margin="5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <!-- Icon -->
+        <Image Stretch="Fill" Source="/ErrorPage_Sample;component/Images/Error.png" Margin="5" />
+
+        <!-- Title -->
+        <TextBlock Text="This page cannot be displayed" FontSize="20" VerticalAlignment="Center" Margin="5" Grid.Column="1" />
+
+        <Line Style="{StaticResource Style_Line_Horizontal}" Height="1" VerticalAlignment="Bottom" Grid.Column="1" />
+
+        <!-- Details -->
+        <StackPanel Grid.Row="1" Grid.Column="1" Margin="0,10,0,0">
+
+            <TextBlock Text="An error has occurred that prevented this page from loading. If this problem persists, please contact your administrator for more information." />
+
+            <HyperlinkButton NavigateUri="/" Content="Home" FontSize="16" Margin="5"/>
+
+        </StackPanel>
+
+        <!-- Error  -->
+        <ScrollViewer Grid.Row="2" Grid.Column="1"
+                      VerticalScrollBarVisibility="Auto" 
+                      HorizontalScrollBarVisibility="Disabled" 
+                      BorderThickness="0">
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <!-- Description -->
+                <Grid Grid.Row="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Text="Exception Details:" FontWeight="Bold" Grid.Row="0" />
+
+                    <Border Background="#FFFFCC" Padding="5" Grid.Row="1">
+                        <TextBox TextWrapping="Wrap" BorderThickness="0" Background="#FFFFCC" Text="{Binding Path=Exception.Message}"/>
+                    </Border>
+
+                </Grid>
+
+                <!-- StackTrace -->
+                <Grid Grid.Row="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Text="Stack Trace:" FontWeight="Bold" Grid.Row="0" />
+
+                    <Border Background="#FFFFCC" Padding="5" Grid.Row="1" >
+                        <TextBox TextWrapping="Wrap" BorderThickness="0" Background="#FFFFCC"
+                             Text="{Binding Path=Exception.StackTrace}">
+                        </TextBox>
+                    </Border>
+
+                </Grid>
+
+            </Grid>
+
+        </ScrollViewer>
+
+        <!-- Version -->
+        <Line Style="{StaticResource Style_Line_Horizontal}" Height="1" Grid.Row="3" Grid.Column="1" />
+
+        <Grid Grid.Row="4" Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Text="Version Information:" FontWeight="Bold" Grid.Column="0" />
+            <TextBox TextWrapping="Wrap" BorderThickness="0" Text="{Binding Path=VersionInformation}" VerticalAlignment="Center" Grid.Column="1" />
+            
+        </Grid>
+
+    </Grid>
+    
+</UserControl>
